@@ -1,0 +1,76 @@
+git add <file> 将文件添加到仓库
+git commit -m <message>   将文件提交到仓库 并说明提交内容
+git status   查看当前仓库状态 （是否被修改）
+git diff   查看当前文件的修改内容
+git log    查看修改日志 
+git log  --pretty=oneline    查看commit id 
+
+在git中 当用HEAD前版本, 也就是最新版本，上一个版本为HEAD^ ，再上一个为HEAD^^ 
+git reset  --hard HEAD^ 退回到上一个的版本， 也可以git reset --hard + commit_id 
+git reflog  用来记录每一次退回以前版本的操作，在当中可以产看之前的commit id以便可以指向退回想要的版本
+git checkout 撤销已经添加到工作区的修改。
+git push 将本地库内容推送到远程
+git remote add origin git@server -name:path/repo-name.g 要关联一个远程库，使用此命令
+git pushi -u origin master 推送master分支的所有内容
+git pushi origin master 推送每次最新修改到远程仓库
+git clone 从远程仓库克隆一个仓库到本地库
+——————创建与合并分支——————
+git branch 查看分支
+git branch <name> 创建分支
+git checkout <name> 切换分支
+git  checkout -b <name>创建+切换分支
+git merge <name> 合并某分支到当前分支
+git branch -d <name> 删除分支
+——————解决冲突——————————
+git log --graph
+__分支管理策咯——————
+git-br-policy
+合并分支时，加上--no-ff参数就可以用普通模式合并，
+合并后的历史有分支，能看出来曾经做过合并，
+而fast forward合并就看不出来曾经做过合并。
+————————Bug——————
+当手头工作没有完成时，先把现场git stash 一下，然后去修复Bug,修复后，再git stash pop ，回到工作现场。
+——————Feature————————
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除
+——————多人协作——————
+因此，多人协作的工作模式通常是这样：
+
+首先，可以试图用git push origin <branch-name>推送自己的修改；
+
+如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+
+如果合并有冲突，则解决冲突，并在本地提交；
+
+没有冲突或者解决掉冲突后，再用git push origin <branch-name>推送就能成功！
+
+如果git pull提示no tracking information，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream-to <branch-name> origin/<branch-name>。
+
+这就是多人协作的工作模式，一旦熟悉了，就非常简单。
+
+小结
+查看远程库信息，使用git remote -v；
+
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+————创建标签——————
+命令git tag <tagname>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+
+命令git tag -a <tagname> -m "blablabla..."可以指定标签信息；
+
+命令git tag可以查看所有标签。
+————————操作标签————————
+命令git push origin <tagname>可以推送一个本地标签；
+
+命令git push origin --tags可以推送全部未推送过的本地标签；
+
+命令git tag -d <tagname>可以删除一个本地标签；
+
+命令git push origin :refs/tags/<tagname>可以删除一个远程标签
+——————
